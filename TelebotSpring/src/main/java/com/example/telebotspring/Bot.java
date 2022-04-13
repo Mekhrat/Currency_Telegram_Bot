@@ -80,7 +80,7 @@ public class Bot extends TelegramLongPollingBot {
                     break;
             }
             Double percent = changesService.getPercent(name);
-            if (percent > 1) {  //При изменении больше 10% бот отправит сообшение
+            if (percent > 10) {  //При изменении больше 10% бот отправит сообшение
                 String count = String.format("%.2f", percent);
                 List<Users> users = usersService.getUsers();
                 for (Users user : users) {
