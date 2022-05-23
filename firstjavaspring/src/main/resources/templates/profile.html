@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <div th:insert="~{layout/head}"></div>
+    <title>Index</title>
+</head>
+<body>
+<div class="container-fluid" th:insert="~{layout/navbar}"></div>
+    <div class="row mt-5">
+        <div class="col-12">
+            <h1 class="text-center">WELCOME <span th:text="${currentUser.getFull_name()}"></span></h1>
+        </div>
+    </div>
+</body>
+</html>
+
+
+

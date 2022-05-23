@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta th:insert="~{parents/link}" http-equiv="X-UA-Compatible" content="ie=edge">
+    <title th:text="${item.name}"></title>
+</head>
+<body>
+<div th:insert="~{parents/navbar}"></div>
+</body>
+<div class="container">
+    <div class="container-fluid">
+        <br>
+        <h4 class="text-center" th:text="'Details: ' + ${item.name}"></h4>
+
+        <div class="text-end">
+            <button class="btn btn-danger" data-bs-toggle="modal"
+                    data-bs-target="#deleteModal">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash"
+                     viewBox="0 0 16 16">
+                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                    <path fill-rule="evenodd"
+                          d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete Item?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <form th:action="@{'/deleteitem'}" method="post">
+                        <input type="hidden" name="id" th:value="${item.id}">
+                        <button type="submit" class="btn btn-primary">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <form th:action="@{'/edititem'}" method="post" class="row g-3 needs-validation">
+        <input type="hidden" th:value="${item.id}" name="id">
+        <div class="row g-3 needs-validation">
+            <div class="col-md-6">
+                <label for="inputEmail4" class="form-label">Name</label>
+                <input type="text" class="form-control" name="name" th:value="${item.name}" id="inputEmail4">
+            </div>
+            <div class="col-md-4">
+                <label for="inputPassword4" class="form-label">Price</label>
+                <input type="number" class="form-control" th:value="${item.price}" name="price" id="inputPassword4">
+            </div>
+            <div class="col-md-2">
+                <label class="form-label" for="inlineFormSelectPre">Stars</label>
+                <select class="form-select" name="stars" id="inlineFormSelectPre">
+                    <option th:value="${item.stars}" th:text="${stars}" selected></option>
+                    <option th:value="1">*</option>
+                    <option value="2">* *</option>
+                    <option value="3">* * *</option>
+                    <option value="4">* * * *</option>
+                    <option value="5">* * * * *</option>
+                </select>
+            </div>
+            <div class="col-12">
+                <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+                <!--            <textarea class="form-control" th:value="${item.description}" name="description" id="exampleFormControlTextarea1" rows="3">-->
+                <!--            </textarea>-->
+                <input type="text" class="form-control" th:value="${item.description}" name="description"
+                       id="exampleFormControlTextarea1">
+            </div>
+            <div class="col-md-8">
+                <label for="inputAddress" class="form-label">Small Picture URL</label>
+                <input type="text" class="form-control" th:value="${item.smallPicURL}" name="smallPicURL"
+                       id="inputAddress" placeholder="">
+            </div>
+            <div class="col-md-4">
+                <label for="inputAddress2" class="form-label">Date</label>
+                <input type="date" class="form-control" th:value="${item.addedDate}" name="addedDate" id="inputAddress2"
+                       placeholder="">
+            </div>
+            <div class="col-md-8">
+                <label for="inputAddress22" class="form-label">Large Picture URL</label>
+                <input type="text" class="form-control" th:value="${item.largePicURL}" name="largePicURL"
+                       id="inputAddress22" placeholder="">
+            </div>
+
+            <div class="col-md-4">
+                <label for="inputState" class="form-label">Brand</label>
+                <select id="inputState" name="brand" class="form-select">
+                    <option th:each="br : ${brands}" th:text="${br.name}" th:value="${br.id}"
+                            th:selected="${item.brand.id==br.id}"></option>
+                </select>
+            </div>
+
+            <div class="col-12">
+                <div class="form-check">
+                    <input class="form-check-input" name="inTopPage" type="checkbox" th:checked="${item.inTopPage}"
+                           id="gridCheck" th:value="top">
+                    <label class="form-check-label" for="gridCheck">
+                        In Top Page
+                    </label>
+                </div>
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-pencil-square" viewBox="0 0 16 16">
+                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"></path>
+                        <path fill-rule="evenodd"
+                              d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"></path>
+                    </svg>
+                    <span th:text=" Save"></span>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div th:insert="~{parents/footer}"></div>
+</html>

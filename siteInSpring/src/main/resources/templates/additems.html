@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta th:insert="~{parents/link}" http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<div th:insert="~{parents/navbar}"></div>
+</body>
+<div class="container">
+    <br>
+    <h4 class="text-center">Add Item</h4>
+    <form th:action="@{'/additems'}" method="post" class="row g-3 needs-validation">
+        <div class="col-md-6">
+            <label for="inputEmail4" class="form-label">Name</label>
+            <input type="text" class="form-control" name="name" id="inputEmail4">
+        </div>
+        <div class="col-md-4">
+            <label for="inputPassword4" class="form-label">Price</label>
+            <input type="number" class="form-control" name="price" id="inputPassword4">
+        </div>
+        <div class="col-md-2">
+            <label class="form-label" for="inlineFormSelectPre">Stars</label>
+            <select class="form-select" name="stars" id="inlineFormSelectPre">
+                <option value="1">*</option>
+                <option value="2">* *</option>
+                <option value="3">* * *</option>
+                <option value="4">* * * *</option>
+                <option value="5">* * * * *</option>
+            </select>
+        </div>
+        <div class="col-12">
+            <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+            <textarea class="form-control" name="description" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+        <div class="col-md-8">
+            <label for="inputAddress" class="form-label">Small Picture URL</label>
+            <input type="text" class="form-control" name="smallPicURL" id="inputAddress" placeholder="">
+        </div>
+        <div class="col-md-4">
+            <label for="inputAddress2" class="form-label">Date</label>
+            <input type="date" class="form-control" name="addedDate" id="inputAddress2" required placeholder="">
+        </div>
+        <div class="col-md-8">
+            <label for="inputAddress22" class="form-label">Large Picture URL</label>
+            <input type="text" class="form-control" name="largePicURL" id="inputAddress22" placeholder="">
+        </div>
+
+        <div class="col-md-4">
+            <label for="inputState" class="form-label">Brand</label>
+            <select id="inputState" name="brand" class="form-select">
+                <option th:each="br : ${brands}" th:text="${br.name}" th:value="${br.id}"></option>
+            </select>
+        </div>
+
+        <div class="col-12">
+            <div class="form-check">
+                <input class="form-check-input" name="inTopPage" type="checkbox" id="gridCheck" th:value="top">
+                <label class="form-check-label" for="gridCheck">
+                    In Top Page
+                </label>
+            </div>
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">ADD</button>
+        </div>
+    </form>
+</div>
+
+<div th:insert="~{parents/footer}"></div>
+</html>
