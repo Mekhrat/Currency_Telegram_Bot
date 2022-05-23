@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- CSS only -->
+    <div th:insert="~{layout/head}"></div>
+    <title th:text="${item!=null?item.getName():'no found'}"></title>
+</head>
+<body>
+<div class="container-fluid" th:insert="~{layout/navbar}"></div>
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-6 offset-3">
+            <div class="form-group">
+                <label th:text="#{label.name}"></label>
+                <input type="text" class="form-control" th:value="${item!=null?item.getName():'0'}" readonly>
+            </div>
+            <div class="form-group">
+                <label th:text="#{label.price}"></label>
+                <input type="number" class="form-control" th:value="${item!=null?item.getPrice():'0'}" readonly>
+            </div>
+            <div class="form-group">
+                <label th:text="#{label.amount}"></label>
+                <input type="number" class="form-control" th:value="${item!=null?item.getAmount():'0'}" readonly>
+            </div>
+            <div class="form-group">
+                <label th:text="#{label.countries}"></label>
+                <input type="text" class="form-control" th:value="${item!=null?item.country.name:'0'}" readonly>
+            </div>
+            <div class="form-group">
+                <a class="btn btn-success" th:href="@{'/edititem/'+ ${item.getId()}}" sec:authorize="hasRole('ROLE_ADMIN')">Edit</a>
+            </div>
+            </form>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-6 offset-3">
+            <table class="table table-striped">
+                <tbody>
+                <tr th:each="cat : ${item.categories}">
+                    <td th:text="${cat.name}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

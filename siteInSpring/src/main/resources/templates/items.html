@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta th:insert="~{parents/link}" http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<div th:insert="~{parents/navbar}"></div>
+</body>
+<div class="container">
+    <div class="text-end">
+        <a th:href="@{'/additems'}" class="btn btn-warning" role="button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+             class="bi bi-file-earmark-plus-fill" viewBox="0 0 16 16">
+            <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM8.5 7v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 1 0z"></path>
+        </svg>
+        Add Items</a>
+    </div>
+    <br>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col" th:text="Name"></th>
+            <th scope="col" th:text="Price"></th>
+            <th scope="col" th:text="Date"></th>
+            <th scope="col" th:text="Brand"></th>
+            <th scope="col" th:text="Details"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${items}">
+            <th scope="row" th:text="${item.name}"></th>
+            <td th:text="${item.price}"></td>
+            <td th:text="${item.addedDate}"></td>
+            <td th:text="${item.brand.name}"></td>
+            <td >
+                <a th:href="@{'/details/' + ${item.id}}" class="btn btn-info btn-dark" style="size: letter" th:text="Details"></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+</div>
+
+<div th:insert="~{parents/footer}"></div>
+</html>
